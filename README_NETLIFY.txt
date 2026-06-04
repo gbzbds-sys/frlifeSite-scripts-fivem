@@ -1,0 +1,1 @@
+Version nettoyée : sections simplifiées, infos séparées par script, règlement ajouté, images/items conservés. Upload uniquement le dossier SITE_3D_FRLIFE sur Netlify.

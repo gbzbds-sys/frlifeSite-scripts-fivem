@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FRLife Scripts - Boutique FiveM</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--cyan:#00eaff;--blue:#1578ff;--dark:#020712;--text:#f5f9ff;--muted:#b9c7dd;--card:rgba(3,12,33,.86);--stroke:rgba(0,234,255,.22)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);background:#020712;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-3;background:linear-gradient(90deg,rgba(0,5,20,.94),rgba(0,16,58,.78),rgba(0,0,0,.70)),url('assets/fond-site.png') center/cover fixed no-repeat;filter:saturate(1.18)}
+body::after{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(circle at 70% 15%,rgba(0,234,255,.28),transparent 35%),radial-gradient(circle at 20% 80%,rgba(21,120,255,.20),transparent 38%)}
+nav{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 7vw;background:rgba(1,6,18,.80);backdrop-filter:blur(12px);border-bottom:1px solid var(--stroke);position:sticky;top:0;z-index:20}
+.brand{display:flex;align-items:center;gap:15px;font-weight:900;font-size:24px}.brand img{width:54px;height:54px;border-radius:10px;box-shadow:0 0 28px rgba(0,234,255,.6)}
+.brand-name{font-family:'Poppins',Inter,Segoe UI,Arial,sans-serif;font-weight:900;letter-spacing:-.7px}.brand-frlife{color:#fff;text-shadow:0 0 16px rgba(255,255,255,.18)}.brand-scripts{background:linear-gradient(90deg,#00eaff,#1578ff,#7df7ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 22px rgba(0,234,255,.35)}
+.links a{color:var(--text);text-decoration:none;margin-left:24px;font-weight:800}.links a:hover{color:var(--cyan)}
+.hero{min-height:70vh;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:42px;padding:70px 7vw 54px}.eyebrow{display:inline-flex;gap:10px;align-items:center;padding:12px 18px;border:1px solid rgba(0,234,255,.45);border-radius:999px;background:rgba(0,234,255,.08);color:#c8fbff;font-weight:900}
+.hero h1{font-size:clamp(56px,8vw,104px);line-height:.88;margin:28px 0 24px;letter-spacing:-4px}.hero h1 span{display:block;color:var(--cyan);text-shadow:0 0 38px rgba(0,234,255,.55)}
+.hero-title{font-family:'Orbitron','Poppins',Inter,Segoe UI,Arial,sans-serif;font-weight:900;text-transform:none;filter:drop-shadow(0 0 18px rgba(0,234,255,.22))}.hero-frlife{display:block;color:#fff;text-shadow:0 0 24px rgba(255,255,255,.18),0 0 32px rgba(0,98,255,.28)}.hero-scripts{display:block;background:linear-gradient(90deg,#00eaff 0%,#18b7ff 42%,#6df7ff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;position:relative}.hero-scripts::after{content:"";display:block;width:70%;height:4px;margin-top:14px;border-radius:999px;background:linear-gradient(90deg,#00eaff,transparent);box-shadow:0 0 20px rgba(0,234,255,.7)}
+.lead{font-size:20px;line-height:1.6;color:#d7e7ff;max-width:850px}.actions{display:flex;gap:16px;flex-wrap:wrap;margin-top:30px}
+.btn{display:inline-block;padding:15px 22px;border-radius:15px;background:linear-gradient(135deg,var(--blue),var(--cyan));color:white;text-decoration:none;font-weight:900;box-shadow:0 18px 50px rgba(0,234,255,.25);border:0;cursor:pointer;font-size:15px}.btn.secondary{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18)}.btn.small{padding:12px 16px;border-radius:12px}
+.hero-card{position:relative;min-height:450px;display:flex;align-items:center;justify-content:center;perspective:1000px}.glass{width:min(520px,100%);padding:20px;border:1px solid rgba(0,234,255,.35);border-radius:34px;background:rgba(7,26,68,.55);box-shadow:0 30px 100px rgba(0,174,255,.25);transform:rotateY(-7deg) rotateX(3deg)}.glass img{width:100%;border-radius:24px;display:block}
+.float{position:absolute;width:82px;height:82px;padding:14px;border-radius:24px;background:rgba(0,13,45,.82);border:1px solid rgba(0,234,255,.25);box-shadow:0 18px 45px rgba(0,234,255,.18);animation:float 4s ease-in-out infinite}.float img{width:100%;height:100%;object-fit:contain}.f1{left:4%;top:20%}.f2{right:3%;top:32%;animation-delay:.7s}.f3{left:10%;bottom:16%;animation-delay:1.1s}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+section{padding:62px 7vw}.section-title{font-size:42px;margin:0 0 14px}.section-sub{color:var(--muted);font-size:18px;margin:0 0 28px;line-height:1.55}
+.product-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}.product{background:var(--card);border:1px solid rgba(0,234,255,.20);border-radius:28px;overflow:hidden;box-shadow:0 24px 90px rgba(0,0,0,.28)}.product img.cover{width:100%;height:245px;object-fit:cover;display:block}.product-content{padding:26px}.product h3{font-size:29px;margin:0 0 12px}
+.tags{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.tag{border:1px solid rgba(0,234,255,.35);background:rgba(0,234,255,.08);padding:8px 12px;border-radius:999px;color:#c8fbff;font-weight:800;font-size:13px}
+.selector{position:sticky;top:82px;z-index:10;background:rgba(1,6,18,.75);backdrop-filter:blur(12px);border:1px solid var(--stroke);border-radius:22px;padding:14px;margin:28px 0;display:flex;gap:12px;flex-wrap:wrap}.tab{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:white;padding:14px 18px;border-radius:15px;font-weight:900;cursor:pointer}.tab.active{background:linear-gradient(135deg,var(--blue),var(--cyan));box-shadow:0 16px 42px rgba(0,234,255,.22)}
+.script-panel{display:none}.script-panel.active{display:block;animation:fade .25s ease}@keyframes fade{from{opacity:.2;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.panel-head{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:center;background:rgba(3,12,33,.78);border:1px solid var(--stroke);border-radius:30px;padding:28px;margin-bottom:26px}.panel-head img{width:100%;border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.35)}
+.info-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}.info{padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);color:#d7e7ff}.info b{color:white}
+.block{background:rgba(3,12,33,.78);border:1px solid var(--stroke);border-radius:26px;padding:26px;margin:24px 0}.block h3{font-size:25px;margin:0 0 14px}.item-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}.item-grid.small{grid-template-columns:repeat(4,minmax(0,1fr))}
+.item-card{padding:16px;border:1px solid rgba(0,234,255,.18);border-radius:20px;background:rgba(3,12,33,.74)}.item-card img{width:58px;height:58px;object-fit:contain}.item-card strong{display:block;margin:12px 0 5px;font-size:16px}.item-card span{display:block;color:#7defff;font-size:12px;font-weight:800}.item-card p{color:#d3e1f6;line-height:1.4;font-size:13px}
+.note{background:rgba(0,234,255,.08);border:1px solid rgba(0,234,255,.25);border-radius:22px;padding:18px;color:#dffbff;line-height:1.55;margin:18px 0}details{margin-top:16px}summary{cursor:pointer;font-weight:900;color:#c8fbff;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}pre{white-space:pre-wrap;word-break:break-word;background:rgba(0,0,0,.58);border:1px solid rgba(0,234,255,.18);border-radius:20px;padding:22px;color:#dffbff;line-height:1.55;max-height:520px;overflow:auto}
+.rule-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.rule{padding:20px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);line-height:1.55;color:#d8e7ff}.rule b{color:white}footer{padding:34px 7vw;color:#8fa6c9;border-top:1px solid rgba(0,234,255,.16)}
+@media(max-width:1050px){.hero,.product-grid,.panel-head{grid-template-columns:1fr}.item-grid,.item-grid.small{grid-template-columns:repeat(2,1fr)}.links{display:none}.hero h1{letter-spacing:-2px}.hero-card{min-height:340px}.rule-grid{grid-template-columns:1fr}}@media(max-width:560px){.item-grid,.item-grid.small,.info-list{grid-template-columns:1fr}.product img.cover{height:190px}.selector{position:static}.hero-title{letter-spacing:-2px}.brand{font-size:22px}}
+
+/* Correction affichage PC FRLife */
+.hero {
+  min-height: 58vh !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 34px !important;
+  padding: 42px 7vw 38px !important;
+}
+.hero h1 {
+  font-size: clamp(42px, 5.4vw, 72px) !important;
+  line-height: .9 !important;
+  margin: 20px 0 18px !important;
+  letter-spacing: -3px !important;
+}
+.hero-card {
+  min-height: 320px !important;
+  overflow: hidden !important;
+}
+.glass {
+  width: min(460px, 100%) !important;
+  padding: 18px !important;
+}
+.glass img {
+  width: 100% !important;
+  height: 260px !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 24px !important;
+  display: block !important;
+}
+
+
+.gallery-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin:18px 0}
+.gallery-row img{width:100%;border-radius:22px;border:1px solid rgba(0,229,255,.25);box-shadow:0 18px 55px rgba(0,0,0,.35);object-fit:cover}
+
+
+.product-duo{display:grid;grid-template-rows:1fr 1fr;height:320px;overflow:hidden;border-bottom:1px solid rgba(0,234,255,.16)}
+.product-duo img.cover{height:160px;border-radius:0;border-bottom:1px solid rgba(0,234,255,.12)}
+
+
+.vente-gallery {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin-top: 22px;
+  margin-bottom: 22px;
+}
+.vente-gallery img {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+</style>
+</head>
+<body>
+<nav><div class="brand"><img src="assets/logo.png" alt="FRLife"><span class="brand-name"><span class="brand-frlife">FRLife</span> <span class="brand-scripts">Scripts</span></span></div><div class="links"><a href="#scripts">Scripts</a><a href="#details">Détails</a><a href="#reglement">Règlement</a><a href="https://discord.gg/aAyzvpsdrX" target="_blank" rel="noopener">Support</a></div></nav>
+<header class="hero"><div><div class="eyebrow">⚡ Boutique FiveM premium</div><h1 class="hero-title"><span class="hero-frlife">FRLife</span><span class="hero-scripts">Scripts</span></h1><p class="lead">Découvrez les ressources FRLife Scripts pour serveurs FiveM : scripts premium, systèmes RP, items ox_inventory, documentation claire et installation simplifiée.</p><div class="actions"><button class="btn" onclick="showScript('tracker')">Voir Tracker</button><button class="btn secondary" onclick="showScript('vente')">Voir Vente PNJ</button><button class="btn secondary" onclick="showScript('radio')">Voir Radio</button><button class="btn secondary" onclick="showScript('bombe')">Voir Bombe</button></div></div><div class="hero-card"><div class="glass"><img src="assets/showcase-montage.png" alt="FRLife Scripts"></div><div class="float f1"><img src="assets/traker.png" alt="tracker"></div><div class="float f2"><img src="assets/bombe.png" alt="bombe"></div><div class="float f3"><img src="assets/radio.png" alt="radio"></div></div></header>
+<section id="scripts"><h2 class="section-title">Nos scripts</h2><p class="section-sub">Quatre produits séparés, chacun avec ses propres détails, images et fichiers d’installation.</p><div class="product-grid">
+<article class="product"><img class="cover" src="assets/tracker-pose-ui.png" alt="FRLife Tracker"><div class="product-content"><h3>FRLife Tracker V3.3.1</h3><p class="lead">Tracker GPS véhicule, boîtier de contrôle, anti-tracker, scan mécanique et brouillage temporaire.</p><div class="tags"><span class="tag">GPS</span><span class="tag">Anti-tracker</span><span class="tag">Brouillage</span><span class="tag">24,99€</span></div><button class="btn small" onclick="showScript('tracker')">Voir les détails</button> <a class="btn small secondary" href="https://frlife-rp.tebex.io" target="_blank">Acheter</a></div></article>
+<article class="product"><div class="product-duo"><img class="cover" src="assets/bombe-ui.png" alt="FRLife Bombe"><img class="cover" src="assets/bombe-boitier-ui.png" alt="Boîtier Bombe RP"></div><div class="product-content"><h3>FRLife Bombe RP</h3><p class="lead">Pose de bombe RP sur véhicule, boîtier de gestion, localisation, bip, chrono et détonation configurable.</p><div class="tags"><span class="tag">Bombe RP</span><span class="tag">NUI 3D</span><span class="tag">Boîtier</span><span class="tag">19,99€</span></div><button class="btn small" onclick="showScript('bombe')">Voir les détails</button> <a class="btn small secondary" href="https://frlife-rp.tebex.io" target="_blank">Acheter</a></div></article>
+<article class="product"><img class="cover" src="assets/vente-pnj-ui.png" alt="FRLife Vente PNJ"><div class="product-content"><h3>FRLife Vente PNJ Pro V2.1.0</h3><p class="lead">Vente aux PNJ, items configurables, sécurité serveur et support ox_inventory.</p><div class="tags"><span class="tag">Vente PNJ</span><span class="tag">ox_inventory</span><span class="tag">Qbox/QBCore</span><span class="tag">19,99€</span></div><button class="btn small" onclick="showScript('vente')">Voir les détails</button> <a class="btn small secondary" href="https://frlife-rp.tebex.io" target="_blank">Acheter</a></div></article>
+<article class="product"><img class="cover" src="assets/radio-banner.png" alt="FRLife Radio"><div class="product-content"><h3>📻 FRLife Radio - Script Radio FiveM</h3><p class="lead">Radio RP utilisable directement depuis ox_inventory, avec item, image et documentation d’installation.</p><div class="tags"><span class="tag">Radio RP</span><span class="tag">ox_inventory</span><span class="tag">Keymaster</span><span class="tag">9,99€</span></div><button class="btn small" onclick="showScript('radio')">Voir les détails</button> <a class="btn small secondary" href="https://frlife-rp.tebex.io" target="_blank">Acheter</a></div></article>
+</div></section>
+<section id="details"><h2 class="section-title">Détails du script</h2><p class="section-sub">Clique sur un onglet : les infos ne sont plus mélangées.</p><div class="selector"><button id="tab-tracker" class="tab active" onclick="showScript('tracker')">FRLife Tracker</button><button id="tab-bombe" class="tab" onclick="showScript('bombe')">FRLife Bombe</button><button id="tab-vente" class="tab" onclick="showScript('vente')">FRLife Vente PNJ</button><button id="tab-radio" class="tab" onclick="showScript('radio')">FRLife Radio</button></div>
+<div id="panel-tracker" class="script-panel active">
+<div class="panel-head"><img src="assets/tracker-pose-ui.png" alt="FRLife Tracker"><div><h2 class="section-title">FRLife Tracker V3.3.1</h2><p class="lead">Système RP complet pour poser un tracker GPS sur un véhicule, gérer les traceurs avec un boîtier de contrôle et utiliser un anti-tracker avec scan mécanique, timer visible et brouillage temporaire du signal.</p><div class="info-list"><div class="info"><b>Framework :</b> Qbox / QBCore</div><div class="info"><b>Inventaire :</b> ox_inventory</div><div class="info"><b>Prix :</b> 24,99€</div><div class="info"><b>Version :</b> 3.3.1 Escrow</div></div></div></div>
+<div class="block"><h3>Fonctionnalités principales</h3><div class="note">Le tracker sert à poser un traceur sur un véhicule. Le boîtier sert uniquement à gérer les trackers posés : localiser, faire sonner, déconnecter et supprimer les trackers déconnectés.</div><div class="rule-grid"><div class="rule"><b>Tracker GPS</b><br>Pose discrète sur véhicule via item, avec menu NUI 3D bleu, nom du traceur, type de véhicule, chrono et mode discret.</div><div class="rule"><b>Boîtier de contrôle</b><br>Gestion des traceurs actifs avec localisation, bip sonore, déconnexion et suppression des anciens trackers.</div><div class="rule"><b>Anti-tracker</b><br>Scan mécanique RP avec interface NUI 3D rouge, détection de traceur et résultat visible.</div><div class="rule"><b>Brouillage temporaire</b><br>Le signal peut être brouillé de 1 seconde à 1 minute. Pendant ce temps, le poseur ne peut plus localiser ni faire sonner le tracker.</div></div></div>
+<div class="block"><h3>Images et items Tracker</h3><div class="note">Les images sont incluses dans le ZIP Tebex. Elles sont à copier dans <b>ox_inventory/web/images</b>. La configuration item est fournie dans la documentation client. Des captures sont aussi affichées pour la pose du tracker, le boîtier de gestion et l’anti-tracker.</div><div class="item-grid small"><article class="item-card"><img src="assets/traker.png" alt="traker"><strong>Tracker GPS</strong><span>traker.png</span><p>Item utilisé uniquement pour poser un tracker sur un véhicule.</p></article>
+<article class="item-card"><img src="assets/boitier.png" alt="boitier"><strong>Boîtier de contrôle</strong><span>boitier.png</span><p>Item utilisé pour gérer les trackers déjà posés.</p></article>
+<article class="item-card"><img src="assets/antitrakeur.png" alt="antitrakeur"><strong>Anti-tracker</strong><span>antitrakeur.png</span><p>Permet de scanner un véhicule et de brouiller un traceur détecté.</p></article></div>
+<div class="panel-head"><img src="assets/tracker-pose-ui.png" alt="Pose tracker"><img src="assets/antitracker-ui.png" alt="Anti-tracker"><img src="assets/tracker-boitier-ui.png" alt="Boîtier tracker"></div>
+<details><summary>Configuration ox_inventory — Tracker</summary><pre>["traker"] = {
+    label = "Tracker GPS",
+    weight = 1500,
+    stack = true,
+    close = true,
+    description = "Petit tracker GPS discret à poser sur un véhicule.",
+    client = {
+        event = "frlifetracker:client:useTracker"
+    }
+},
+
+["boitier"] = {
+    label = "Boîtier de contrôle",
+    weight = 500,
+    stack = false,
+    close = true,
+    description = "Boîtier permettant de gérer les trackers GPS actifs.",
+    client = {
+        event = "frlifetracker:client:useTrackerPanel"
+    }
+},
+
+["antitrakeur"] = {
+    label = "Anti-tracker",
+    weight = 500,
+    stack = true,
+    close = true,
+    description = "Détecteur permettant de scanner et brouiller un tracker.",
+    client = {
+        event = "frlifetracker:client:useAntiTracker"
+    }
+},</pre></details>
+<details open><summary>Installation Tracker</summary><pre>1. Acheter le script sur Tebex.
+2. Récupérer l’accès FiveM Asset via Cfx/Keymaster.
+3. Télécharger le ZIP client Tebex avec README, images et configuration items.
+4. Mettre la resource FRLifeTracker dans resources/[frlife]/.
+5. Copier les images dans ox_inventory/web/images/.
+6. Ajouter la configuration items dans ox_inventory/data/items.lua.
+7. Ajouter les ensures nécessaires dans server.cfg selon la documentation fournie.
+8. Redémarrer le serveur et tester sur un serveur de développement.</pre></details></div></div>
+<div id="panel-bombe" class="script-panel">
+<div class="panel-head"><img src="assets/bombe-ui.png" alt="FRLife Bombe"><div><h2 class="section-title">FRLife Bombe RP</h2><p class="lead">Système RP de bombe véhicule avec pose via item, boîtier déclencheur, panel NUI 3D rouge, localisation, bip, déconnexion, suppression et détonation avec chrono configurable.</p><div class="info-list"><div class="info"><b>Framework :</b> Qbox / QBCore</div><div class="info"><b>Inventaire :</b> ox_inventory</div><div class="info"><b>Prix :</b> 19,99€</div><div class="info"><b>Livraison :</b> FiveM Asset + ZIP installation</div></div></div></div>
+<div class="block"><h3>Fonctionnalités Bombe</h3><div class="rule-grid"><div class="rule"><b>Pose de bombe</b><br>Menu NUI 3D rouge pour configurer la pose sur véhicule : nom RP, type de véhicule, référence, mode discret et chrono.</div><div class="rule"><b>Boîtier déclencheur</b><br>Le boîtier permet de gérer les bombes déjà posées : localiser, faire biper, déconnecter, supprimer et déclencher.</div><div class="rule"><b>Détonation avec timer</b><br>Déclenchement immédiat ou programmé avec un timing configurable de 1 à 60 secondes et chronomètre visible dans le panel.</div><div class="rule"><b>Gestion propre</b><br>Les bombes déconnectées peuvent être supprimées de la liste pour garder un panel propre.</div></div></div>
+<div class="block"><h3>Images et items Bombe</h3><div class="note">Les images sont fournies pour ox_inventory. Elles sont à copier dans <b>ox_inventory/web/images</b>. La configuration item est fournie dans la documentation client.</div><div class="item-grid small"><article class="item-card"><img src="assets/bombe.png" alt="bombe"><strong>Bombe RP</strong><span>bombe.png</span><p>Item utilisé pour poser une bombe sur un véhicule.</p></article><article class="item-card"><img src="assets/boitierbombe.png" alt="boitierbombe"><strong>Boîtier déclencheur</strong><span>boitierbombe.png</span><p>Item utilisé pour gérer les bombes posées.</p></article></div>
+<details><summary>Configuration ox_inventory — Bombe</summary><pre>["bombe"] = {
+    label = "Bombe RP",
+    weight = 2000,
+    stack = true,
+    close = true,
+    description = "Module RP à poser discrètement sur un véhicule.",
+    client = {
+        image = "bombe.png",
+        event = "frlifebombe:client:openPoseBombe"
+    }
+},
+
+["boitierbombe"] = {
+    label = "Boîtier déclencheur",
+    weight = 1500,
+    stack = true,
+    close = true,
+    description = "Boîtier permettant de gérer les bombes posées.",
+    client = {
+        image = "boitierbombe.png",
+        event = "frlifebombe:client:openBoitierBombe"
+    }
+},</pre></details>
+<details open><summary>Installation Bombe</summary><pre>1. Acheter le script sur Tebex.
+2. Récupérer l’accès FiveM Asset via Cfx/Keymaster.
+3. Télécharger le ZIP client avec README, images et configuration items.
+4. Mettre la resource FRLifeBombe dans resources/[frlife]/.
+5. Copier les images dans ox_inventory/web/images/.
+6. Ajouter la configuration items dans ox_inventory/data/items.lua.
+7. Ajouter les ensures nécessaires dans server.cfg selon la documentation fournie.
+8. Redémarrer le serveur et tester sur un serveur de développement.</pre></details></div></div>
+
+<div id="panel-vente" class="script-panel">
+<div class="panel-head"><img src="assets/vente-pnj-ui.png" alt="FRLife Vente PNJ"><div><h2 class="section-title">FRLife Vente PNJ Pro V2.1.0</h2><p class="lead">Système de vente aux PNJ avec items configurables, prix configurables, sécurité serveur contre l’abus de distance et blocage des PNJ invalides. Le client reçoit l’asset protégé via Cfx/Keymaster et le ZIP Tebex avec les 34 images, les items et le README.</p><div class="info-list"><div class="info"><b>Framework :</b> Qbox / QBCore</div><div class="info"><b>Inventaire :</b> ox_inventory</div><div class="info"><b>Commandes :</b> /ventepnj, /classementdeal</div><div class="info"><b>Images :</b> 34 incluses</div><div class="info"><b>Prix :</b> 19,99€</div></div>
+
+<div class="gallery-row vente-gallery">
+  <img src="assets/vente-pnj-result-ui.png" alt="Résultat vente PNJ">
+  <img src="assets/vente-pnj-nui-ui.png" alt="Menu NUI Vente PNJ">
+  <img src="assets/vente-pnj-classement-ui.png" alt="Classement Vente PNJ">
+</div>
+</div></div>
+<div class="block"><h3>Images et items Vente PNJ</h3><div class="note"><b>34 images incluses.</b> Tous les items vendables sont affichés ici. <b>argentsale</b> est l’item de récompense reçu après une vente, ce n’est pas un item vendu au PNJ.</div><div class="item-grid"><article class="item-card"><img src="assets/argentsale.png" alt="argentsale"><strong>Argent sale</strong><span>argentsale.png</span><p>Récompense reçue après une vente, ce n’est pas un item vendu au PNJ.</p></article>
+<article class="item-card"><img src="assets/tete_amnesia.png" alt="tete_amnesia"><strong>Tête d’Amnesia</strong><span>tete_amnesia.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/tete_skunk.png" alt="tete_skunk"><strong>Tête de Skunk</strong><span>tete_skunk.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/tete_og.png" alt="tete_og"><strong>Tête d’OG</strong><span>tete_og.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/tete.png" alt="tete"><strong>Tête de weed</strong><span>tete.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/pochon_skunk.png" alt="pochon_skunk"><strong>Pochon de Skunk</strong><span>pochon_skunk.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/pochon_damne.png" alt="pochon_damne"><strong>Pochon d’Amnesia</strong><span>pochon_damne.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/joint_defrappe.png" alt="joint_defrappe"><strong>Joint</strong><span>joint_defrappe.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/pochon_og.png" alt="pochon_og"><strong>Pochon d’OG</strong><span>pochon_og.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/cannabis.png" alt="cannabis"><strong>Cannabis</strong><span>cannabis.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/pochon_coc.png" alt="pochon_coc"><strong>Pochon de coke</strong><span>pochon_coc.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/coc.png" alt="coc"><strong>Coc</strong><span>coc.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/cocpur.png" alt="cocpur"><strong>Coke pure</strong><span>cocpur.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/coc_pur.png" alt="coc_pur"><strong>Coke pure</strong><span>coc_pur.png</span><p>Alias compatible, produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/coc_500g.png" alt="coc_500g"><strong>500 g de coke</strong><span>coc_500g.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/coke.png" alt="coke"><strong>Coke</strong><span>coke.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/cocaine.png" alt="cocaine"><strong>Cocaïne</strong><span>cocaine.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/crack.png" alt="crack"><strong>Crack</strong><span>crack.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/meth.png" alt="meth"><strong>Meth</strong><span>meth.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/meth_bag.png" alt="meth_bag"><strong>Pochon de meth</strong><span>meth_bag.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/meth_baggy.png" alt="meth_baggy"><strong>Pochon de meth</strong><span>meth_baggy.png</span><p>Alias compatible, produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/crystal_meth.png" alt="crystal_meth"><strong>Crystal meth</strong><span>crystal_meth.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/ecstasy.png" alt="ecstasy"><strong>Ecstasy</strong><span>ecstasy.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/mdma.png" alt="mdma"><strong>MDMA</strong><span>mdma.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/xanax.png" alt="xanax"><strong>Xanax</strong><span>xanax.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/oxy.png" alt="oxy"><strong>Oxy</strong><span>oxy.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/ketamine.png" alt="ketamine"><strong>Kétamine</strong><span>ketamine.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/heroine.png" alt="heroine"><strong>Héroïne</strong><span>heroine.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/heroin.png" alt="heroin"><strong>Heroin</strong><span>heroin.png</span><p>Alias compatible, produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/heroinpur.png" alt="heroinpur"><strong>Héroïne pure</strong><span>heroinpur.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/opium.png" alt="opium"><strong>Opium</strong><span>opium.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/lean.png" alt="lean"><strong>Lean</strong><span>lean.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/shroom.png" alt="shroom"><strong>Champignons</strong><span>shroom.png</span><p>Produit vendable aux PNJ.</p></article>
+<article class="item-card"><img src="assets/lsd.png" alt="lsd"><strong>LSD</strong><span>lsd.png</span><p>Produit vendable aux PNJ.</p></article></div>
+<details><summary>Code ox_inventory/data/items.lua — Vente PNJ</summary><pre>[&quot;argentsale&quot;] = {
+    label = &quot;Argent sale&quot;,
+    weight = 0,
+    stack = true,
+    close = true,
+    description = &quot;Récompense reçue après une vente, ce n’est pas un item vendu au PNJ.&quot;
+},
+
+[&quot;tete_amnesia&quot;] = {
+    label = &quot;Tête d’Amnesia&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;tete_skunk&quot;] = {
+    label = &quot;Tête de Skunk&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;tete_og&quot;] = {
+    label = &quot;Tête d’OG&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;tete&quot;] = {
+    label = &quot;Tête de weed&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;pochon_skunk&quot;] = {
+    label = &quot;Pochon de Skunk&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;pochon_damne&quot;] = {
+    label = &quot;Pochon d’Amnesia&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;joint_defrappe&quot;] = {
+    label = &quot;Joint&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;pochon_og&quot;] = {
+    label = &quot;Pochon d’OG&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;cannabis&quot;] = {
+    label = &quot;Cannabis&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;pochon_coc&quot;] = {
+    label = &quot;Pochon de coke&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;coc&quot;] = {
+    label = &quot;Coc&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;cocpur&quot;] = {
+    label = &quot;Coke pure&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;coc_pur&quot;] = {
+    label = &quot;Coke pure&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Alias compatible, produit vendable aux PNJ.&quot;
+},
+
+[&quot;coc_500g&quot;] = {
+    label = &quot;500 g de coke&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;coke&quot;] = {
+    label = &quot;Coke&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;cocaine&quot;] = {
+    label = &quot;Cocaïne&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;crack&quot;] = {
+    label = &quot;Crack&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;meth&quot;] = {
+    label = &quot;Meth&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;meth_bag&quot;] = {
+    label = &quot;Pochon de meth&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;meth_baggy&quot;] = {
+    label = &quot;Pochon de meth&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Alias compatible, produit vendable aux PNJ.&quot;
+},
+
+[&quot;crystal_meth&quot;] = {
+    label = &quot;Crystal meth&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;ecstasy&quot;] = {
+    label = &quot;Ecstasy&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;mdma&quot;] = {
+    label = &quot;MDMA&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;xanax&quot;] = {
+    label = &quot;Xanax&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;oxy&quot;] = {
+    label = &quot;Oxy&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;ketamine&quot;] = {
+    label = &quot;Kétamine&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;heroine&quot;] = {
+    label = &quot;Héroïne&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;heroin&quot;] = {
+    label = &quot;Heroin&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Alias compatible, produit vendable aux PNJ.&quot;
+},
+
+[&quot;heroinpur&quot;] = {
+    label = &quot;Héroïne pure&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;opium&quot;] = {
+    label = &quot;Opium&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;lean&quot;] = {
+    label = &quot;Lean&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;shroom&quot;] = {
+    label = &quot;Champignons&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},
+
+[&quot;lsd&quot;] = {
+    label = &quot;LSD&quot;,
+    weight = 10,
+    stack = true,
+    close = true,
+    description = &quot;Produit vendable aux PNJ.&quot;
+},</pre></details>
+<details open><summary>Installation Vente PNJ</summary><pre>1. Acheter le script sur Tebex.
+2. Récupérer l’accès FiveM Asset via Cfx/Keymaster.
+3. Télécharger le ZIP Tebex avec README, images et items.
+4. Mettre la resource FRLife_VentePNJ dans resources/[frlife]/.
+5. Copier les 34 images dans ox_inventory/web/images/.
+6. Copier le code items dans ox_inventory/data/items.lua.
+7. Vérifier la configuration dans shared/config.lua.
+8. Ajouter dans server.cfg :
+
+ensure ox_lib
+ensure oxmysql
+ensure ox_inventory
+ensure FRLife_VentePNJ
+
+9. Redémarrer le serveur.
+10. Tester avec /ventepnj et /classementdeal.</pre></details></div></div>
+
+<div id="panel-radio" class="script-panel">
+<div class="panel-head"><img src="assets/radio-banner.png" alt="FRLife Radio"><div><h2 class="section-title">📻 FRLife Radio - Script Radio FiveM</h2><p class="lead">Script radio FiveM conçu pour les serveurs RP. Le joueur utilise l’item Radio depuis ox_inventory pour ouvrir l’interface radio et rejoindre une fréquence. Livraison propre via Cfx/Keymaster avec un ZIP Tebex contenant l’image, l’item et la documentation client.</p><div class="info-list"><div class="info"><b>Framework :</b> Qbox / QBCore selon configuration</div><div class="info"><b>Inventaire :</b> ox_inventory</div><div class="info"><b>Utilisation :</b> item Radio</div><div class="info"><b>Livraison :</b> FiveM Asset + ZIP installation</div></div></div></div>
+<div class="block"><h3>Image et item Radio</h3><div class="note">L’image <b>radio.png</b> est incluse dans le ZIP Tebex. Elle est à copier dans <b>ox_inventory/web/images</b>. Le code item est fourni pour <b>ox_inventory/data/items.lua</b>.</div><div class="item-grid small"><article class="item-card"><img src="assets/radio.png" alt="radio"><strong>Radio</strong><span>radio.png</span><p>Item radio utilisable depuis l’inventaire pour ouvrir le menu radio.</p></article></div>
+<details open><summary>Code ox_inventory/data/items.lua — Radio</summary><pre>["radio"] = {
+    label = "Radio",
+    weight = 300,
+    stack = false,
+    close = true,
+    description = "Permet d’ouvrir la radio et de rejoindre une fréquence.",
+    client = {
+        image = "radio.png",
+        event = "frlife_radio:useRadio"
+    }
+},</pre></details>
+<details open><summary>Installation Radio</summary><pre>1. Acheter le script sur Tebex.
+2. Récupérer l’accès FiveM Asset via Cfx/Keymaster.
+3. Télécharger le ZIP Tebex avec README, image radio.png et item ox_inventory.
+4. Télécharger la resource frlife_radio depuis les assets Cfx/Keymaster.
+5. Mettre la resource frlife_radio dans resources/[frlife]/.
+6. Copier radio.png dans ox_inventory/web/images/.
+7. Copier le code item dans ox_inventory/data/items.lua.
+8. Ajouter dans server.cfg :
+
+ensure ox_lib
+ensure ox_inventory
+ensure frlife_radio
+
+9. Redémarrer le serveur.
+10. Tester avec /giveitem ID radio 1 puis utiliser l’item Radio dans l’inventaire.</pre></details></div></div>
+</section>
+<section id="reglement"><h2 class="section-title">Règlement et conditions</h2><p class="section-sub">Conditions importantes avant achat. Ces règles protègent le créateur et expliquent clairement ce que reçoit le client.</p><div class="rule-grid">
+<div class="rule"><b>Produits numériques</b><br>Les scripts FRLife sont des ressources numériques FiveM. Après achat, le client reçoit l’accès au FiveM Asset via Cfx/Keymaster ainsi qu’un fichier Tebex contenant README, images ox_inventory, items et documentation.</div>
+<div class="rule"><b>Installation</b><br>Le client est responsable de l’installation : placer la resource dans resources, copier les images dans ox_inventory/web/images, ajouter les items dans ox_inventory/data/items.lua et mettre les ensure dans server.cfg.</div>
+<div class="rule"><b>Compatibilité</b><br>Les dépendances nécessaires sont précisées sur chaque fiche produit : Qbox, QBCore, ox_inventory, ox_lib ou oxmysql selon le script. Le client doit vérifier sa base avant achat.</div>
+<div class="rule"><b>Licence</b><br>L’achat donne une licence d’utilisation personnelle pour le serveur du client. Il est interdit de revendre, partager, leak, republier ou redistribuer le script, même gratuitement.</div>
+<div class="rule"><b>Protection Escrow</b><br>Certains fichiers sont protégés via Cfx Asset Escrow. Les fichiers de configuration restent modifiables pour le paramétrage, mais le cœur du code peut être protégé.</div>
+<div class="rule"><b>Remboursement</b><br>Les scripts étant livrés numériquement après achat, aucun remboursement n’est garanti une fois l’accès Cfx accordé ou le fichier téléchargé, sauf problème technique confirmé empêchant totalement l’utilisation.</div>
+</div></section>
+<section id="support"><h2 class="section-title">Support</h2><p class="section-sub">Support disponible via Discord après achat. Pour gagner du temps, prépare le nom du produit, une preuve d’achat, une capture console serveur et une explication claire du problème.</p><a class="btn" href="https://discord.gg/aAyzvpsdrX" target="_blank" rel="noopener">Rejoindre le Discord support</a></section>
+<footer>© FRLife Scripts — Site vitrine. Paiement et livraison via Tebex / Cfx Keymaster.</footer>
+<script>
+function showScript(name){
+  ['tracker','bombe','vente','radio'].forEach(function(key){
+    document.getElementById('panel-' + key).classList.toggle('active', name===key);
+    document.getElementById('tab-' + key).classList.toggle('active', name===key);
+  });
+  document.getElementById('details').scrollIntoView({behavior:'smooth', block:'start'});
+}
+</script>
+</body>
+</html>
