@@ -18,8 +18,10 @@
 <style>
 :root{--cyan:#00eaff;--blue:#1578ff;--dark:#020712;--text:#f5f9ff;--muted:#b9c7dd;--card:rgba(3,12,33,.86);--stroke:rgba(0,234,255,.22)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);background:#020712;overflow-x:hidden}
-body::before{content:"";position:fixed;inset:0;z-index:-3;background:linear-gradient(90deg,rgba(0,5,20,.94),rgba(0,16,58,.78),rgba(0,0,0,.70)),url('assets/fond-site.png') center/cover fixed no-repeat;filter:saturate(1.18)}
-body::after{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(circle at 70% 15%,rgba(0,234,255,.28),transparent 35%),radial-gradient(circle at 20% 80%,rgba(21,120,255,.20),transparent 38%)}
+body::before{content:"";position:fixed;inset:0;z-index:-4;background:linear-gradient(90deg,rgba(0,5,20,.94),rgba(0,16,58,.78),rgba(0,0,0,.70)),url('assets/fond-site.png') center/cover fixed no-repeat;filter:saturate(1.18)}
+body::after{content:"";position:fixed;inset:0;z-index:-3;background:radial-gradient(circle at 70% 15%,rgba(0,234,255,.28),transparent 35%),radial-gradient(circle at 20% 80%,rgba(21,120,255,.20),transparent 38%)}
+.gta-site-overlay{position:fixed;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(90deg,rgba(8,0,30,.12),rgba(98,61,255,.06),rgba(0,0,0,.04)),url('assets/gta-frlife-overlay.png') center center/cover no-repeat;opacity:.16;mix-blend-mode:screen;filter:saturate(1.08) contrast(1.04);transform:scale(1.03)}
+.gta-site-overlay::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 65%,rgba(122,77,255,.10),transparent 35%),linear-gradient(180deg,rgba(0,0,0,.00),rgba(0,0,0,.12) 78%,rgba(0,0,0,.28));opacity:.95}
 nav{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 7vw;background:rgba(1,6,18,.80);backdrop-filter:blur(12px);border-bottom:1px solid var(--stroke);position:sticky;top:0;z-index:20}
 .brand{display:flex;align-items:center;gap:15px;font-weight:900;font-size:24px}.brand img{width:54px;height:54px;border-radius:10px;box-shadow:0 0 28px rgba(0,234,255,.6)}
 .brand-name{font-family:'Poppins',Inter,Segoe UI,Arial,sans-serif;font-weight:900;letter-spacing:-.7px}.brand-frlife{color:#fff;text-shadow:0 0 16px rgba(255,255,255,.18)}.brand-scripts{background:linear-gradient(90deg,#00eaff,#1578ff,#7df7ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 22px rgba(0,234,255,.35)}
@@ -66,7 +68,7 @@ section{padding:62px 7vw}.section-title{font-size:42px;margin:0 0 14px}.section-
 .rule:nth-child(5):hover{box-shadow:0 30px 72px rgba(0,0,0,.34),0 0 24px rgba(255,179,71,.18),0 0 52px rgba(255,122,24,.12)}
 .rule:nth-child(6):hover{box-shadow:0 30px 72px rgba(0,0,0,.34),0 0 24px rgba(255,77,122,.18),0 0 52px rgba(255,138,91,.12)}
 footer{padding:34px 7vw;color:#8fa6c9;border-top:1px solid rgba(0,234,255,.16)}
-@media(max-width:1050px){.hero,.product-grid,.panel-head{grid-template-columns:1fr}.item-grid,.item-grid.small{grid-template-columns:repeat(2,1fr)}.links{display:none}.hero h1{letter-spacing:-2px}.hero-card{min-height:340px}.rule-grid{grid-template-columns:1fr}}@media(max-width:560px){.item-grid,.item-grid.small,.info-list{grid-template-columns:1fr}.product img.cover{height:190px}.selector{position:static}.hero-title{letter-spacing:-2px}.brand{font-size:22px}}
+@media(max-width:1050px){.hero,.product-grid,.panel-head{grid-template-columns:1fr}.item-grid,.item-grid.small{grid-template-columns:repeat(2,1fr)}.links{display:none}.hero h1{letter-spacing:-2px}.hero-card{min-height:340px}.rule-grid{grid-template-columns:1fr}.gta-site-overlay{background-position:58% center;opacity:.13}}@media(max-width:560px){.item-grid,.item-grid.small,.info-list{grid-template-columns:1fr}.product img.cover{height:190px}.selector{position:static}.hero-title{letter-spacing:-2px}.brand{font-size:22px}.gta-site-overlay{opacity:.10;background-position:60% center;filter:saturate(1.02) contrast(1.02)}}
 
 /* Correction affichage PC FRLife */
 .hero {
@@ -175,6 +177,7 @@ footer{padding:34px 7vw;color:#8fa6c9;border-top:1px solid rgba(0,234,255,.16)}
 
 </head>
 <body>
+<div class="gta-site-overlay" aria-hidden="true"></div>
 <div class="promo-ticker" aria-label="Annonces FRLife Scripts">
   <div class="promo-track">
     <span>🚀 FRLife Scripts FiveM</span><span class="promo-dot">QBCore</span><span>💎 Compatible Qbox</span><span>⚡ ox_inventory prêt</span><span>🔐 Livraison Keymaster / Tebex</span><span>🎯 Assistance Discord</span>
