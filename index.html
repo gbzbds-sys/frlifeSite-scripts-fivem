@@ -3,7 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FRLife Scripts - Boutique FiveM</title>
+<title>FRLife Scripts FiveM | Scripts QBCore, Qbox, ESX, ox_inventory</title>
+<meta name="description" content="FRLife Scripts : boutique de scripts FiveM premium pour serveurs RP. Tracker GPS véhicule, Vente PNJ, Bombe RP, Radio RP, QBCore, Qbox, ox_inventory, Keymaster et support Discord.">
+<meta name="keywords" content="script FiveM, scripts FiveM, boutique FiveM, script QBCore, script Qbox, script ESX, ox_inventory, tracker FiveM, vente PNJ FiveM, bombe FiveM, radio FiveM, script RP, serveur RP FiveM, Tebex FiveM, Keymaster FiveM">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://frlifescriptsfivem.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FRLife Scripts FiveM - Boutique QBCore/Qbox/ESX">
+<meta property="og:description" content="Scripts FiveM premium : Tracker GPS, Vente PNJ, Bombe RP, Radio RP, ox_inventory, Keymaster et support Discord.">
+<meta property="og:image" content="https://frlifescriptsfivem.vercel.app/assets/showcase-montage.png">
+<meta property="og:url" content="https://frlifescriptsfivem.vercel.app/">
+<meta name="twitter:card" content="summary_large_image">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{--cyan:#00eaff;--blue:#1578ff;--dark:#020712;--text:#f5f9ff;--muted:#b9c7dd;--card:rgba(3,12,33,.86);--stroke:rgba(0,234,255,.22)}
@@ -83,12 +93,87 @@ section{padding:62px 7vw}.section-title{font-size:42px;margin:0 0 14px}.section-
   object-fit: cover;
 }
 
+
+
+/* ===== FRLife Quasar-like boost v2 ===== */
+.promo-ticker{height:44px;display:flex;align-items:center;overflow:hidden;background:linear-gradient(90deg,#009dff,#00eaff,#006eff);border-bottom:1px solid rgba(255,255,255,.18);box-shadow:0 0 30px rgba(0,234,255,.28);position:sticky;top:82px;z-index:19;text-transform:uppercase;font-weight:900;letter-spacing:2px;color:#eaffff}
+.promo-track{display:flex;gap:48px;white-space:nowrap;animation:ticker 24s linear infinite;text-shadow:0 0 14px rgba(0,0,0,.38)}
+.promo-track span{display:inline-flex;align-items:center;gap:10px}.promo-dot{opacity:.85;color:#001b2a;background:#dfffff;border-radius:999px;padding:2px 8px}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.featured-zone{padding-top:28px;overflow:hidden;border-top:1px solid rgba(0,234,255,.10);border-bottom:1px solid rgba(0,234,255,.12);background:linear-gradient(180deg,rgba(0,234,255,.03),rgba(0,0,0,.08))}
+.featured-title{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px}.featured-title h2{font-size:clamp(38px,5vw,72px);line-height:.9;margin:0;font-family:'Orbitron','Poppins',Inter,sans-serif;text-transform:uppercase;letter-spacing:-2px}.featured-title h2 span{color:var(--cyan);text-shadow:0 0 28px rgba(0,234,255,.55)}
+.featured-title p{color:#cbd8ef;max-width:560px;font-size:17px;line-height:1.5;margin:0}
+.featured-slider{position:relative;perspective:1200px}.featured-track{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(310px,410px);gap:28px;overflow-x:auto;padding:18px 2px 34px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#00eaff rgba(255,255,255,.08)}
+.featured-card{position:relative;scroll-snap-align:start;background:rgba(2,9,25,.92);border:1px solid rgba(0,234,255,.30);border-radius:28px;overflow:hidden;box-shadow:0 24px 75px rgba(0,0,0,.45),0 0 35px rgba(0,234,255,.12);transform:rotateY(-3deg);transition:.25s ease}.featured-card:hover{transform:rotateY(0deg) translateY(-7px);box-shadow:0 34px 110px rgba(0,0,0,.48),0 0 48px rgba(0,234,255,.28)}
+.featured-card::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,234,255,.18),transparent 35%,rgba(21,120,255,.14));pointer-events:none;z-index:2}.featured-img{height:210px;position:relative;overflow:hidden}.featured-img img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.15) contrast(1.06);transition:.3s ease}.featured-card:hover .featured-img img{transform:scale(1.05)}
+.badge-promo{position:absolute;top:16px;right:16px;z-index:3;padding:9px 13px;border-radius:14px;background:linear-gradient(135deg,#00eaff,#1578ff);color:#001325;font-weight:1000;box-shadow:0 14px 34px rgba(0,234,255,.32);font-size:13px;text-transform:uppercase}.badge-left{left:16px;right:auto;background:rgba(0,8,24,.86);color:#dfffff;border:1px solid rgba(0,234,255,.35)}
+.featured-content{padding:24px;position:relative;z-index:3}.featured-content h3{font-size:25px;margin:0 0 10px}.featured-content p{color:#cbd8ef;line-height:1.5;margin:0 0 18px}.price-row{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin:16px 0 20px}.price-current{font-family:'Orbitron','Poppins',Inter,sans-serif;font-size:28px;color:#00eaff;font-weight:900;text-shadow:0 0 18px rgba(0,234,255,.32)}.price-note{font-size:12px;color:#9db5d7;font-weight:800;text-transform:uppercase;text-align:right}.promo-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.promo-tags span{font-size:12px;font-weight:900;border:1px solid rgba(0,234,255,.30);background:rgba(0,234,255,.08);padding:7px 9px;border-radius:999px;color:#c8fbff}
+.product{position:relative;transition:.25s ease}.product:hover{transform:translateY(-6px);border-color:rgba(0,234,255,.45);box-shadow:0 34px 110px rgba(0,0,0,.38),0 0 42px rgba(0,234,255,.18)}.product::before{content:"TOP";position:absolute;top:16px;right:16px;z-index:3;background:linear-gradient(135deg,#00eaff,#1578ff);color:#00111f;border-radius:12px;padding:8px 12px;font-weight:1000;box-shadow:0 12px 32px rgba(0,234,255,.32)}.product:nth-child(2)::before{content:"RP"}.product:nth-child(3)::before{content:"BEST"}.product:nth-child(4)::before{content:"NEW"}
+.seo-cloud{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.seo-cloud a,.seo-cloud span{color:#dfffff;text-decoration:none;border:1px solid rgba(0,234,255,.25);background:rgba(0,234,255,.07);padding:10px 13px;border-radius:999px;font-weight:800;font-size:13px}.seo-cloud a:hover{background:rgba(0,234,255,.16)}
+.notice-honest{font-size:12px;color:#9db5d7;margin-top:10px;line-height:1.45}.buy-line{display:flex;gap:10px;flex-wrap:wrap}
+@media(max-width:780px){.promo-ticker{top:82px}.featured-title{align-items:flex-start;flex-direction:column}.featured-track{grid-auto-columns:minmax(270px,86vw)}.featured-card{transform:none}}
+
 </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "FRLife Scripts FiveM",
+  "description": "Boutique de scripts FiveM premium pour serveurs RP : QBCore, Qbox, ox_inventory, Keymaster.",
+  "url": "https://frlifescriptsfivem.vercel.app/",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"item":{"@type":"Product","name":"FRLife Tracker V3.3.1 - Script Tracker GPS FiveM","image":"https://frlifescriptsfivem.vercel.app/assets/tracker-pose-ui.png","description":"Script tracker GPS FiveM avec boîtier, anti-tracker, scan mécanique et brouillage temporaire.","brand":{"@type":"Brand","name":"FRLife Scripts"},"offers":{"@type":"Offer","priceCurrency":"EUR","price":"24.99","availability":"https://schema.org/InStock","url":"https://frlife-rp.tebex.io"}}},
+    {"@type":"ListItem","position":2,"item":{"@type":"Product","name":"FRLife Bombe RP - Script Bombe Véhicule FiveM","image":"https://frlifescriptsfivem.vercel.app/assets/bombe-ui.png","description":"Script bombe RP véhicule avec pose, boîtier de gestion, bip, localisation, chrono et détonation configurable.","brand":{"@type":"Brand","name":"FRLife Scripts"},"offers":{"@type":"Offer","priceCurrency":"EUR","price":"19.99","availability":"https://schema.org/InStock","url":"https://frlife-rp.tebex.io"}}},
+    {"@type":"ListItem","position":3,"item":{"@type":"Product","name":"FRLife Vente PNJ Pro - Script Vente PNJ FiveM","image":"https://frlifescriptsfivem.vercel.app/assets/vente-pnj-nui-ui.png","description":"Script vente aux PNJ FiveM avec items configurables, sécurité serveur, classement deal et support ox_inventory.","brand":{"@type":"Brand","name":"FRLife Scripts"},"offers":{"@type":"Offer","priceCurrency":"EUR","price":"19.99","availability":"https://schema.org/InStock","url":"https://frlife-rp.tebex.io"}}},
+    {"@type":"ListItem","position":4,"item":{"@type":"Product","name":"FRLife Radio - Script Radio FiveM ox_inventory","image":"https://frlifescriptsfivem.vercel.app/assets/radio-banner.png","description":"Script radio RP FiveM utilisable via item ox_inventory avec documentation d'installation.","brand":{"@type":"Brand","name":"FRLife Scripts"},"offers":{"@type":"Offer","priceCurrency":"EUR","price":"9.99","availability":"https://schema.org/InStock","url":"https://frlife-rp.tebex.io"}}}
+  ]
+}
+</script>
+
 </head>
 <body>
+<div class="promo-ticker" aria-label="Annonces FRLife Scripts">
+  <div class="promo-track">
+    <span>🚀 FRLife Scripts FiveM</span><span class="promo-dot">QBCore</span><span>💎 Qbox compatible</span><span>⚡ ox_inventory ready</span><span>🔐 Livraison Keymaster / Tebex</span><span>🎯 Support Discord</span>
+    <span>🚀 FRLife Scripts FiveM</span><span class="promo-dot">QBCore</span><span>💎 Qbox compatible</span><span>⚡ ox_inventory ready</span><span>🔐 Livraison Keymaster / Tebex</span><span>🎯 Support Discord</span>
+  </div>
+</div>
 <nav><div class="brand"><img src="assets/logo.png" alt="FRLife"><span class="brand-name"><span class="brand-frlife">FRLife</span> <span class="brand-scripts">Scripts</span></span></div><div class="links"><a href="#scripts">Scripts</a><a href="#details">Détails</a><a href="#reglement">Règlement</a><a href="https://discord.gg/aAyzvpsdrX" target="_blank" rel="noopener">Support</a></div></nav>
-<header class="hero"><div><div class="eyebrow">⚡ Boutique FiveM premium</div><h1 class="hero-title"><span class="hero-frlife">FRLife</span><span class="hero-scripts">Scripts</span></h1><p class="lead">Découvrez les ressources FRLife Scripts pour serveurs FiveM : scripts premium, systèmes RP, items ox_inventory, documentation claire et installation simplifiée.</p><div class="actions"><button class="btn" onclick="showScript('tracker')">Voir Tracker</button><button class="btn secondary" onclick="showScript('vente')">Voir Vente PNJ</button><button class="btn secondary" onclick="showScript('radio')">Voir Radio</button><button class="btn secondary" onclick="showScript('bombe')">Voir Bombe</button></div></div><div class="hero-card"><div class="glass"><img src="assets/showcase-montage.png" alt="FRLife Scripts"></div><div class="float f1"><img src="assets/traker.png" alt="tracker"></div><div class="float f2"><img src="assets/bombe.png" alt="bombe"></div><div class="float f3"><img src="assets/radio.png" alt="radio"></div></div></header>
-<section id="scripts"><h2 class="section-title">Nos scripts</h2><p class="section-sub">Quatre produits séparés, chacun avec ses propres détails, images et fichiers d’installation.</p><div class="product-grid">
+<header class="hero"><div><div class="eyebrow">⚡ Boutique FiveM premium</div><h1 class="hero-title"><span class="hero-frlife">FRLife</span><span class="hero-scripts">Scripts</span></h1><p class="lead">Boutique de scripts FiveM premium pour serveurs RP : QBCore, Qbox, ESX, ox_inventory, Tracker GPS, Vente PNJ, Bombe RP, Radio RP, documentation claire et livraison Keymaster / Tebex.</p><div class="actions"><button class="btn" onclick="showScript('tracker')">Voir Tracker</button><button class="btn secondary" onclick="showScript('vente')">Voir Vente PNJ</button><button class="btn secondary" onclick="showScript('radio')">Voir Radio</button><button class="btn secondary" onclick="showScript('bombe')">Voir Bombe</button></div></div><div class="hero-card"><div class="glass"><img src="assets/showcase-montage.png" alt="FRLife Scripts"></div><div class="float f1"><img src="assets/traker.png" alt="tracker"></div><div class="float f2"><img src="assets/bombe.png" alt="bombe"></div><div class="float f3"><img src="assets/radio.png" alt="radio"></div></div></header>
+
+<section class="featured-zone" aria-labelledby="featured-title">
+  <div class="featured-title">
+    <h2 id="featured-title">Featured <span>Products</span></h2>
+    <p>Un style vitrine premium inspiré boutique FiveM : cartes 3D, bandeau défilant, badges visibles, prix clairs et référencement renforcé sur les recherches FiveM / QBCore / Qbox / ESX.</p>
+  </div>
+  <div class="featured-slider">
+    <div class="featured-track" aria-label="Produits mis en avant FRLife Scripts">
+      <article class="featured-card">
+        <div class="featured-img"><img src="assets/tracker-pose-ui.png" alt="Script tracker GPS FiveM QBCore Qbox"><span class="badge-promo badge-left">QBCore / Qbox</span><span class="badge-promo">Top vente</span></div>
+        <div class="featured-content"><h3>FRLife Tracker V3.3.1</h3><p>Tracker GPS véhicule, boîtier de contrôle, anti-tracker, scan mécanique et brouillage RP.</p><div class="promo-tags"><span>Script FiveM</span><span>GPS RP</span><span>ox_inventory</span></div><div class="price-row"><div class="price-current">24,99€</div><div class="price-note">Prix actuel<br>inchangé</div></div><div class="buy-line"><button class="btn small" onclick="showScript('tracker')">Voir</button><a class="btn small secondary" href="https://frlife-rp.tebex.io" target="_blank" rel="noopener">Acheter</a></div></div>
+      </article>
+      <article class="featured-card">
+        <div class="featured-img"><img src="assets/vente-pnj-nui-ui.png" alt="Script vente PNJ FiveM ox_inventory"><span class="badge-promo badge-left">Best RP</span><span class="badge-promo">Business</span></div>
+        <div class="featured-content"><h3>FRLife Vente PNJ Pro</h3><p>Vendre à tous les PNJ de la ville, générer du business RP et gérer le classement des deals.</p><div class="promo-tags"><span>Vente PNJ</span><span>Qbox</span><span>Argent sale RP</span></div><div class="price-row"><div class="price-current">19,99€</div><div class="price-note">Prix actuel<br>inchangé</div></div><div class="buy-line"><button class="btn small" onclick="showScript('vente')">Voir</button><a class="btn small secondary" href="https://frlife-rp.tebex.io" target="_blank" rel="noopener">Acheter</a></div></div>
+      </article>
+      <article class="featured-card">
+        <div class="featured-img"><img src="assets/bombe-ui.png" alt="Script bombe RP véhicule FiveM"><span class="badge-promo badge-left">NUI 3D</span><span class="badge-promo">RP action</span></div>
+        <div class="featured-content"><h3>FRLife Bombe RP</h3><p>Pose bombe véhicule, boîtier, localisation, bip, chrono et détonation configurable.</p><div class="promo-tags"><span>Bombe RP</span><span>Keymaster</span><span>Véhicule RP</span></div><div class="price-row"><div class="price-current">19,99€</div><div class="price-note">Prix actuel<br>inchangé</div></div><div class="buy-line"><button class="btn small" onclick="showScript('bombe')">Voir</button><a class="btn small secondary" href="https://frlife-rp.tebex.io" target="_blank" rel="noopener">Acheter</a></div></div>
+      </article>
+      <article class="featured-card">
+        <div class="featured-img"><img src="assets/radio-banner.png" alt="Script radio FiveM ox_inventory"><span class="badge-promo badge-left">Radio RP</span><span class="badge-promo">Nouveau</span></div>
+        <div class="featured-content"><h3>FRLife Radio</h3><p>Radio RP utilisable directement depuis ox_inventory avec image item et documentation d’installation.</p><div class="promo-tags"><span>Radio FiveM</span><span>ox_inventory</span><span>Serveur RP</span></div><div class="price-row"><div class="price-current">9,99€</div><div class="price-note">Prix actuel<br>inchangé</div></div><div class="buy-line"><button class="btn small" onclick="showScript('radio')">Voir</button><a class="btn small secondary" href="https://frlife-rp.tebex.io" target="_blank" rel="noopener">Acheter</a></div></div>
+      </article>
+    </div>
+  </div>
+  <div class="seo-cloud" aria-label="Mots-clés FiveM recherchés">
+    <span>script FiveM</span><span>scripts FiveM premium</span><span>QBCore scripts</span><span>Qbox scripts</span><span>ESX scripts</span><span>ox_inventory</span><span>tracker FiveM</span><span>vente PNJ FiveM</span><span>bombe RP FiveM</span><span>radio FiveM</span><span>boutique Tebex FiveM</span><span>Keymaster FiveM</span>
+  </div>
+  <p class="notice-honest">Badges marketing sans fausse réduction : les prix affichés restent les prix réels actuels.</p>
+</section>
+
+<section id="scripts"><h2 class="section-title">Nos scripts</h2><p class="section-sub">Scripts FiveM optimisés pour attirer l’œil : cartes produit, badges premium, mots-clés recherchés et informations claires avant achat.</p><div class="product-grid">
 <article class="product"><img class="cover" src="assets/tracker-pose-ui.png" alt="FRLife Tracker"><div class="product-content"><h3>FRLife Tracker V3.3.1</h3><p class="lead">Tracker GPS véhicule, boîtier de contrôle, anti-tracker, scan mécanique et brouillage temporaire.</p><div class="tags"><span class="tag">GPS</span><span class="tag">Anti-tracker</span><span class="tag">Brouillage</span><span class="tag">24,99€</span></div><button class="btn small" onclick="showScript('tracker')">Voir les détails</button> <a class="btn small secondary" href="https://frlife-rp.tebex.io" target="_blank">Acheter</a></div></article>
 <article class="product"><div class="product-duo"><img class="cover" src="assets/bombe-ui.png" alt="FRLife Bombe"><img class="cover" src="assets/bombe-boitier-ui.png" alt="Boîtier Bombe RP"></div><div class="product-content"><h3>FRLife Bombe RP</h3><p class="lead">Pose de bombe RP sur véhicule, boîtier de gestion, localisation, bip, chrono et détonation configurable.</p><div class="tags"><span class="tag">Bombe RP</span><span class="tag">NUI 3D</span><span class="tag">Boîtier</span><span class="tag">19,99€</span></div><button class="btn small" onclick="showScript('bombe')">Voir les détails</button> <a class="btn small secondary" href="https://frlife-rp.tebex.io" target="_blank">Acheter</a></div></article>
 <article class="product"><img class="cover" src="assets/vente-pnj-nui-ui.png" alt="FRLife Vente PNJ"><div class="product-content"><h3>FRLife Vente PNJ Pro V2.1.0</h3><p class="lead">Vente aux PNJ, items configurables, sécurité serveur et support ox_inventory.</p><div class="tags"><span class="tag">Vente PNJ</span><span class="tag">ox_inventory</span><span class="tag">Qbox/QBCore</span><span class="tag">19,99€</span></div><button class="btn small" onclick="showScript('vente')">Voir les détails</button> <a class="btn small secondary" href="https://frlife-rp.tebex.io" target="_blank">Acheter</a></div></article>
