@@ -1945,5 +1945,101 @@ scriptClose.addEventListener('click', closeScriptDetails);
 })();
 </script>
 
+
+<script>
+(function(){
+  const LOG_ENDPOINT = '/api/log';
+
+  function sendLog(payload) {
+    try {
+      const data = {
+        ...payload,
+        page: location.href,
+        referrer: document.referrer || 'direct',
+        language: navigator.language || 'unknown',
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown',
+        screen: `${window.screen.width}x${window.screen.height}`,
+        userAgent: navigator.userAgent || 'unknown'
+      };
+
+      if (navigator.sendBeacon) {
+        const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+        navigator.sendBeacon(LOG_ENDPOINT, blob);
+      } else {
+        fetch(LOG_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+          keepalive: true
+        }).catch(function(){});
+      }
+    } catch (e) {}
+  }
+
+  window.frlifeLogSiteEvent = sendLog;
+
+  let visitSent = false;
+  function logVisitOnce() {
+    if (visitSent) return;
+    visitSent = true;
+    sendLog({ event: 'visit', action: 'page_open' });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', logVisitOnce);
+  } else {
+    logVisitOnce();
+  }
+
+  document.addEventListener('click', function(event) {
+    const productButton = event.target.closest('[onclick*="openScriptDetails"]');
+    if (productButton) {
+      const onclick = productButton.getAttribute('onclick') || '';
+      const match = onclick.match(/openScriptDetails\(['"]([^'"]+)['"]/);
+      const productKey = match ? match[1] : 'unknown';
+      const productNames = {
+        tracker: 'FRLife Tracker',
+        vente: 'FRLife Vente PNJ Pro',
+        bombe: 'FRLife Bombe RP',
+        radio: 'FRLife Radio',
+        mechanic: 'FRLife Mechanic Customs'
+      };
+      sendLog({
+        event: 'product_view',
+        action: 'click_voir',
+        product: productNames[productKey] || productKey
+      });
+      return;
+    }
+
+    const link = event.target.closest('a[href]');
+    if (!link) return;
+
+    const href = link.href || '';
+    const text = (link.innerText || link.textContent || '').trim();
+
+    if (href.includes('tebex.io')) {
+      sendLog({
+        event: 'buy_click',
+        action: 'click_acheter',
+        product: text || 'Boutique Tebex'
+      });
+    } else if (href.includes('discord.gg') || href.includes('discord.com')) {
+      sendLog({
+        event: 'discord_click',
+        action: 'click_discord',
+        product: 'Discord FRLife'
+      });
+    } else if (href.includes('youtube.com') || href.includes('youtu.be') || href.includes('tiktok.com')) {
+      sendLog({
+        event: 'video_click',
+        action: 'click_video_preview',
+        product: text || href
+      });
+    }
+  }, true);
+})();
+</script>
+
 </body>
 </html>
