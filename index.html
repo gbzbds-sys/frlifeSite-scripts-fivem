@@ -992,6 +992,15 @@ footer{padding:34px 7vw;color:#8fa6c9;border-top:1px solid rgba(0,234,255,.16)}
 @media (max-width: 900px){.featured-title{gap:12px;margin-bottom:22px}.featured-title p{max-width:100%}}
 
 50%{transform:translateX(-50%) scaleX(1.04);opacity:1}}
+
+/* Top produits phares : visuels uniquement, pas d'ouverture document produit */
+.hero-mini-card {
+  cursor: default !important;
+}
+.hero-mini-card * {
+  pointer-events: none;
+}
+
 </style>
 
 <script type="application/ld+json">
@@ -1926,19 +1935,7 @@ function showScript(name){
       window.openScriptDetails(script, e);
     });
   });
-
-  document.querySelectorAll('.hero-mini-card').forEach(function(card, index){
-    const script = order[index];
-    if(!script) return;
-    card.setAttribute('data-script', script);
-    card.addEventListener('click', function(e){
-      if(e.target.closest('a[href], button')) return;
-      window.openScriptDetails(script, e);
-    });
-  });
-
-
-  scriptClose.addEventListener('click', closeScriptDetails);
+scriptClose.addEventListener('click', closeScriptDetails);
   scriptModal.addEventListener('click', function(e){
     if(e.target === scriptModal) closeScriptDetails();
   });
