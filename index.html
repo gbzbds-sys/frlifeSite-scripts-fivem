@@ -159,60 +159,186 @@ footer{padding:34px 7vw;color:#8fa6c9;border-top:1px solid rgba(0,234,255,.16)}
 
 
 
-/* ===== Effet impact de balle réaliste style vitre / métal ===== */
-.bullet-impact {
-  position: fixed;
-  width: 92px;
-  height: 92px;
-  left: 0;
-  top: 0;
-  pointer-events: none;
-  z-index: 99999;
-  transform: translate(-50%, -50%) scale(.22) rotate(var(--rot, 0deg));
-  opacity: 0;
-  background: url('assets/impact-balle-verre.png') center/contain no-repeat;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,.45));
-  animation: bulletImpactEnter .08s ease-out forwards, bulletImpactFade 3.1s linear forwards;
+/* ===== Effet bouton ENTIER qui casse comme du verre ===== */
+.glass-shatter-target{
+  position:relative !important;
+  overflow:hidden !important;
+  isolation:isolate;
+  transform-origin:center center !important;
+  will-change:transform,filter;
 }
-.bullet-flash {
-  position: fixed;
-  width: 16px;
-  height: 16px;
-  left: 0;
-  top: 0;
-  pointer-events: none;
-  z-index: 99998;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(255,255,255,.95) 0 22%, rgba(255,214,130,.95) 23% 46%, rgba(255,160,40,.45) 47% 72%, transparent 73%);
-  animation: bulletFlash .14s ease-out forwards;
+
+/* Pendant la casse : on masque le vrai bouton pour laisser voir les morceaux */
+.glass-shatter-hit{
+  color:transparent !important;
+  text-shadow:none !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  border-color:rgba(181,109,255,.42) !important;
 }
-.bullet-chip {
-  position: fixed;
-  width: 2px;
-  height: 2px;
-  pointer-events: none;
-  z-index: 99997;
-  border-radius: 50%;
-  background: rgba(225,225,225,.92);
-  box-shadow: 0 0 3px rgba(255,255,255,.18);
-  animation: bulletChip .30s ease-out forwards;
+.glass-shatter-hit::before,
+.glass-shatter-hit::after{
+  opacity:0 !important;
 }
-@keyframes bulletImpactEnter {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(.08) rotate(var(--rot, 0deg)); }
-  100% { opacity: .98; transform: translate(-50%, -50%) scale(1) rotate(var(--rot, 0deg)); }
+
+.glass-break-layer{
+  position:absolute;
+  inset:0;
+  z-index:36;
+  pointer-events:none;
+  border-radius:inherit;
+  overflow:hidden;
+  opacity:0;
+  animation:glassLayerFade 1.05s ease-out forwards;
 }
-@keyframes bulletImpactFade {
-  0%, 84% { opacity: .98; }
-  100% { opacity: 0; }
+.glass-break-layer::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:url('assets/glass-crack-overlay.png') center/cover no-repeat;
+  opacity:.96;
+  mix-blend-mode:screen;
+  transform:scale(1.05);
 }
-@keyframes bulletFlash {
-  0% { opacity: .95; transform: translate(-50%, -50%) scale(.3); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.8); }
+.glass-break-layer::after{
+  content:"";
+  position:absolute;
+  left:var(--hitX,50%);
+  top:var(--hitY,50%);
+  width:15px;
+  height:15px;
+  transform:translate(-50%,-50%) rotate(var(--holeRot, -7deg));
+  border-radius:48% 52% 43% 57% / 52% 45% 55% 48%;
+  background:
+    radial-gradient(circle at 45% 42%, rgba(0,0,0,1) 0 48%, rgba(45,30,24,.88) 49% 70%, transparent 71%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.18) 0 2px, transparent 2.5px);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.18),
+    0 0 5px rgba(255,255,255,.08),
+    0 0 10px rgba(0,0,0,.38);
+  clip-path:polygon(50% 0%, 58% 10%, 73% 7%, 80% 18%, 95% 22%, 88% 36%, 100% 50%, 88% 63%, 94% 77%, 79% 80%, 72% 94%, 58% 89%, 50% 100%, 42% 90%, 27% 94%, 20% 79%, 6% 76%, 12% 62%, 0% 50%, 12% 37%, 6% 23%, 20% 20%, 28% 8%, 42% 11%);
 }
-@keyframes bulletChip {
-  0% { opacity: 1; transform: translate(0, 0) scale(1); }
-  100% { opacity: 0; transform: translate(var(--x), var(--y)) scale(.2); }
+
+/* Morceaux du bouton complet */
+.glass-shard{
+  position:absolute;
+  inset:0;
+  z-index:35;
+  pointer-events:none;
+  border-radius:inherit;
+  opacity:0;
+  background-image:var(--btnBgImage, none), linear-gradient(135deg, rgba(255,255,255,.20), rgba(255,255,255,.04));
+  background-color:var(--btnBgColor, rgba(120,80,255,.55));
+  background-size:100% 100%,100% 100%;
+  background-position:center;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.12), 0 0 14px rgba(181,109,255,.12);
+  filter:saturate(1.10) brightness(1.04);
+  animation:glassShardBreak .92s cubic-bezier(.16,.86,.24,1) forwards;
+}
+.glass-shard::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('assets/glass-crack-overlay.png') center/cover no-repeat;
+  opacity:.72;
+  mix-blend-mode:screen;
+}
+
+/* Découpe en gros morceaux visibles sur toute la forme */
+.glass-shard.s1{clip-path:polygon(0 0, 46% 0, 38% 44%, 0 58%);--tx:-52px;--ty:-24px;--rot:-18deg}
+.glass-shard.s2{clip-path:polygon(46% 0, 100% 0, 100% 34%, 66% 46%, 38% 44%);--tx:48px;--ty:-26px;--rot:17deg}
+.glass-shard.s3{clip-path:polygon(0 58%, 38% 44%, 49% 57%, 34% 100%, 0 100%);--tx:-45px;--ty:36px;--rot:-16deg}
+.glass-shard.s4{clip-path:polygon(38% 44%, 66% 46%, 58% 100%, 34% 100%, 49% 57%);--tx:-4px;--ty:48px;--rot:9deg}
+.glass-shard.s5{clip-path:polygon(66% 46%, 100% 34%, 100% 100%, 58% 100%);--tx:54px;--ty:36px;--rot:18deg}
+.glass-shard.s6{clip-path:polygon(38% 44%, 66% 46%, 49% 57%);--tx:4px;--ty:-22px;--rot:24deg}
+
+.glass-flash{
+  position:absolute;
+  left:var(--hitX,50%);
+  top:var(--hitY,50%);
+  width:20px;
+  height:20px;
+  transform:translate(-50%,-50%) scale(.22);
+  pointer-events:none;
+  z-index:38;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(255,255,255,.96) 0 22%, rgba(255,220,150,.88) 23% 42%, rgba(255,174,56,.16) 43% 70%, transparent 71%);
+  animation:glassFlash .20s ease-out forwards;
+}
+.glass-smoke{
+  position:fixed;
+  left:var(--screenX,0px);
+  top:var(--screenY,0px);
+  width:96px;
+  height:68px;
+  transform:translate(-12%, -82%) scale(.48) rotate(var(--smokeRot, -8deg));
+  transform-origin:center;
+  pointer-events:none;
+  z-index:100000;
+  opacity:0;
+  filter:blur(6px);
+  background:
+    radial-gradient(ellipse at 18% 63%, rgba(255,255,255,.34) 0 12%, rgba(140,150,170,.22) 13% 30%, transparent 31%),
+    radial-gradient(ellipse at 40% 52%, rgba(220,230,245,.28) 0 16%, rgba(110,120,145,.19) 17% 36%, transparent 37%),
+    radial-gradient(ellipse at 61% 43%, rgba(180,190,210,.22) 0 15%, rgba(90,100,128,.15) 16% 32%, transparent 33%),
+    radial-gradient(ellipse at 76% 35%, rgba(135,145,170,.16) 0 12%, transparent 13%);
+  animation:glassSmokeDrift 1.15s ease-out forwards;
+}
+.glass-chip{
+  position:absolute;
+  left:var(--hitX,50%);
+  top:var(--hitY,50%);
+  width:3px;
+  height:3px;
+  border-radius:50%;
+  background:rgba(238,238,242,.96);
+  box-shadow:0 0 4px rgba(255,255,255,.22);
+  pointer-events:none;
+  z-index:39;
+  transform:translate(-50%,-50%);
+  animation:glassChip .42s ease-out forwards;
+}
+
+/* Vibration bien visible du bouton entier */
+.glass-shock{
+  animation:glassTargetVibration .38s cubic-bezier(.25,.8,.25,1) 1 !important;
+}
+
+@keyframes glassLayerFade{
+  0%{opacity:0}
+  8%{opacity:1}
+  80%{opacity:1}
+  100%{opacity:0}
+}
+@keyframes glassShardBreak{
+  0%{opacity:0;transform:translate(0,0) rotate(0deg) scale(1)}
+  8%{opacity:1}
+  70%{opacity:.96}
+  100%{opacity:0;transform:translate(var(--tx),var(--ty)) rotate(var(--rot)) scale(.82)}
+}
+@keyframes glassFlash{
+  0%{opacity:.98;transform:translate(-50%,-50%) scale(.18)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}
+}
+@keyframes glassSmokeDrift{
+  0%{opacity:.72;transform:translate(-8%, -62%) scale(.42) rotate(var(--smokeRot, -8deg))}
+  45%{opacity:.46}
+  100%{opacity:0;transform:translate(-72%, -138%) scale(1.12) rotate(calc(var(--smokeRot, -8deg) - 8deg))}
+}
+@keyframes glassChip{
+  0%{opacity:1;transform:translate(-50%,-50%) translate(0,0) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-50%) translate(var(--tx,0),var(--ty,0)) scale(.25)}
+}
+@keyframes glassTargetVibration{
+  0%{transform:translate(0,0) rotate(0deg) scale(1);filter:brightness(1)}
+  12%{transform:translate(-4px,2px) rotate(-1.4deg) scale(.985);filter:brightness(1.16)}
+  24%{transform:translate(4px,-2px) rotate(1.2deg) scale(.972);filter:brightness(.94)}
+  36%{transform:translate(-3px,-1px) rotate(-.9deg) scale(.965)}
+  48%{transform:translate(3px,1px) rotate(.8deg) scale(.975)}
+  64%{transform:translate(-2px,0) rotate(-.4deg) scale(.985)}
+  82%{transform:translate(1px,0) rotate(.2deg) scale(.995)}
+  100%{transform:translate(0,0) rotate(0deg) scale(1);filter:brightness(1)}
 }
 
 </style>
@@ -727,13 +853,17 @@ ensure frlife_radio
 9. Redémarrer le serveur.
 10. Tester avec /giveitem ID radio 1 puis utiliser l’item Radio dans l’inventaire.</pre></details></div></div>
 </section>
-<section id="reglement"><h2 class="section-title">Règlement et conditions</h2><p class="section-sub">Conditions importantes avant achat. Ces règles protègent le créateur et expliquent clairement ce que reçoit le client.</p><div class="rule-grid">
-<div class="rule"><b>Produits numériques</b><br>Les scripts FRLife sont des ressources numériques FiveM. Après achat, le client reçoit l’accès au FiveM Asset via Cfx/Keymaster ainsi qu’un fichier Tebex contenant README, images ox_inventory, items et documentation.</div>
-<div class="rule"><b>Installation</b><br>Le client est responsable de l’installation : placer la resource dans resources, copier les images dans ox_inventory/web/images, ajouter les items dans ox_inventory/data/items.lua et mettre les ensure dans server.cfg.</div>
-<div class="rule"><b>Compatibilité</b><br>Les dépendances nécessaires sont précisées sur chaque fiche produit : Qbox, QBCore, ox_inventory, ox_lib ou oxmysql selon le script. Le client doit vérifier sa base avant achat.</div>
-<div class="rule"><b>Licence</b><br>L’achat donne une licence d’utilisation personnelle pour le serveur du client. Il est interdit de revendre, partager, leak, republier ou redistribuer le script, même gratuitement.</div>
-<div class="rule"><b>Protection Escrow</b><br>Certains fichiers sont protégés via Cfx Asset Escrow. Les fichiers de configuration restent modifiables pour le paramétrage, mais le cœur du code peut être protégé.</div>
-<div class="rule"><b>Remboursement</b><br>Les scripts étant livrés numériquement après achat, aucun remboursement n’est garanti une fois l’accès Cfx accordé ou le fichier téléchargé, sauf problème technique confirmé empêchant totalement l’utilisation.</div>
+<section id="reglement"><h2 class="section-title">Règlement, sécurité et conditions</h2><p class="section-sub">Achat clair, livraison encadrée et règles transparentes. Tout est présenté de manière professionnelle pour rassurer le client avant paiement.</p><div class="rule-grid">
+<div class="rule"><b>Produits numériques FiveM</b>Les scripts FRLife sont des ressources numériques FiveM. Après achat, le client reçoit l’accès au FiveM Asset via Cfx/Keymaster ainsi qu’un ZIP Tebex contenant README, images ox_inventory, items et documentation.</div>
+<div class="rule"><b>Paiement sécurisé Tebex</b>Les achats passent par Tebex, plateforme utilisée par de nombreuses boutiques FiveM. Le client paie via une interface claire, reçoit une trace d’achat et garde une preuve de transaction.</div>
+<div class="rule"><b>Livraison Keymaster / Cfx</b>Les ressources compatibles Asset Escrow sont livrées via Cfx/Keymaster lorsque nécessaire. Cela permet de lier proprement la ressource au compte FiveM du client et d’éviter les fichiers douteux.</div>
+<div class="rule"><b>Protection Cfx Asset Escrow</b>Certains fichiers peuvent être protégés par Cfx Asset Escrow. Cette protection limite le leak, le partage sauvage et la revente non autorisée, tout en laissant les fichiers de configuration prévus accessibles.</div>
+<div class="rule"><b>Installation et configuration</b>Le client reste responsable de l’installation : placer la ressource dans resources, ajouter les items dans ox_inventory/data/items.lua, copier les images dans ox_inventory/web/images et mettre les ensure dans server.cfg.</div>
+<div class="rule"><b>Compatibilité annoncée</b>Les dépendances nécessaires sont précisées sur chaque fiche produit : Qbox, QBCore, ESX, ox_inventory, ox_lib ou oxmysql selon le script. Le client doit vérifier sa base avant achat.</div>
+<div class="rule"><b>Licence d’utilisation</b>L’achat donne une licence d’utilisation personnelle pour le serveur du client. Il est interdit de revendre, partager, leak, republier ou redistribuer le script, même gratuitement.</div>
+<div class="rule"><b>Support sérieux</b>Le support passe par Discord. Les demandes sont traitées proprement avec captures, erreurs console et contexte serveur. L’objectif est d’aider le client sans stress et avec une démarche professionnelle.</div>
+<div class="rule"><b>Remboursement</b>Les scripts étant livrés numériquement après achat, aucun remboursement automatique n’est garanti une fois la ressource livrée. Les cas particuliers peuvent être étudiés selon le problème rencontré.</div>
+<div class="rule"><b>Engagement FRLife</b>Chaque fiche produit indique clairement le contenu, le prix, les dépendances et la méthode de livraison. Le but est que le client sache exactement ce qu’il achète avant de payer.</div>
 </div></section>
 <section id="support"><h2 class="section-title">Assistance</h2><p class="section-sub">Support disponible via Discord après achat. Pour gagner du temps, prépare le nom du produit, une preuve d’achat, une capture console serveur et une explication claire du problème.</p><a class="btn" href="https://discord.gg/aAyzvpsdrX" target="_blank" rel="noopener">Rejoindre le Discord support</a></section>
 <footer>© FRLife Scripts — Site vitrine. Paiement et livraison via Tebex / Cfx Keymaster.</footer>
@@ -749,38 +879,85 @@ function showScript(name){
 
 <script>
 (function () {
-  function createBulletImpact(event) {
+  const selectors = 'button, .btn, a, .tab, .selector button, .links a, nav a, .buy-line a, .buy-line button, .seo-cloud a, .product, .featured-card';
+
+  function cleanupTarget(target) {
+    target.classList.remove('glass-shock', 'glass-shatter-hit');
+    target.querySelectorAll('.glass-break-layer, .glass-shard, .glass-flash, .glass-chip').forEach(function(el){ el.remove(); });
+  }
+
+  function shatterButton(event) {
     if (event.button !== 0) return;
     if (event.target.closest('input, textarea, select, option')) return;
 
-    const x = event.clientX;
-    const y = event.clientY;
+    const target = event.target.closest(selectors);
+    if (!target) return;
 
-    const impact = document.createElement('span');
-    impact.className = 'bullet-impact';
-    impact.style.left = x + 'px';
-    impact.style.top = y + 'px';
-    document.body.appendChild(impact);
+    target.classList.add('glass-shatter-target');
+    cleanupTarget(target);
+    void target.offsetWidth;
 
-    for (let i = 0; i < 9; i++) {
-      const spark = document.createElement('span');
-      spark.className = 'bullet-spark';
-      spark.style.left = x + 'px';
-      spark.style.top = y + 'px';
+    const rect = target.getBoundingClientRect();
+    const localX = event.clientX - rect.left;
+    const localY = event.clientY - rect.top;
 
+    const computed = getComputedStyle(target);
+    const bgImage = computed.backgroundImage;
+    const bgColor = computed.backgroundColor;
+
+    if (bgImage && bgImage !== 'none') target.style.setProperty('--btnBgImage', bgImage);
+    target.style.setProperty('--btnBgColor', bgColor || 'rgba(120,80,255,.55)');
+    target.style.setProperty('--hitX', localX + 'px');
+    target.style.setProperty('--hitY', localY + 'px');
+    target.style.setProperty('--holeRot', ((Math.random() * 18) - 9) + 'deg');
+    target.style.setProperty('--smokeRot', ((Math.random() * 12) - 10) + 'deg');
+
+    target.classList.add('glass-shock', 'glass-shatter-hit');
+
+    ['s1','s2','s3','s4','s5','s6'].forEach(function(cls){
+      const shard = document.createElement('span');
+      shard.className = 'glass-shard ' + cls;
+      target.appendChild(shard);
+      window.setTimeout(function(){ shard.remove(); }, 1100);
+    });
+
+    const layer = document.createElement('span');
+    layer.className = 'glass-break-layer';
+    target.appendChild(layer);
+
+    const smoke = document.createElement('span');
+    smoke.className = 'glass-smoke';
+    smoke.style.setProperty('--screenX', event.clientX + 'px');
+    smoke.style.setProperty('--screenY', event.clientY + 'px');
+    smoke.style.setProperty('--smokeRot', ((Math.random() * 16) - 12) + 'deg');
+    document.body.appendChild(smoke);
+    window.setTimeout(function(){ smoke.remove(); }, 1250);
+
+    const flash = document.createElement('span');
+    flash.className = 'glass-flash';
+    target.appendChild(flash);
+    window.setTimeout(function(){ flash.remove(); }, 220);
+
+    for (let i = 0; i < 8; i++) {
+      const chip = document.createElement('span');
+      chip.className = 'glass-chip';
       const angle = Math.random() * Math.PI * 2;
-      const distance = 16 + Math.random() * 38;
-      spark.style.setProperty('--x', Math.cos(angle) * distance + 'px');
-      spark.style.setProperty('--y', Math.sin(angle) * distance + 'px');
-
-      document.body.appendChild(spark);
-      window.setTimeout(function () { spark.remove(); }, 700);
+      const distance = 8 + Math.random() * 22;
+      chip.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+      chip.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+      target.appendChild(chip);
+      window.setTimeout(function(){ chip.remove(); }, 480);
     }
 
-    window.setTimeout(function () { impact.remove(); }, 1700);
+    window.setTimeout(function(){ layer.remove(); }, 1100);
+
+    // Le bouton revient juste après l'effet de casse.
+    window.setTimeout(function(){
+      target.classList.remove('glass-shock', 'glass-shatter-hit');
+    }, 980);
   }
 
-  document.addEventListener('mousedown', createBulletImpact, { passive: true });
+  document.addEventListener('mousedown', shatterButton, { passive: true });
 })();
 </script>
 
