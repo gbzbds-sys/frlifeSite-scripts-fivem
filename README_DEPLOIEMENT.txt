@@ -1,17 +1,16 @@
-SITE_3D_FRLIFE
-================
+CORRECTION VERCEL / SITE QUI AFFICHE DU TEXTE BIZARRE
 
-Projet prêt pour Vercel.
+Le problème venait de index.html : dans le ZIP que tu as envoyé, index.html était en réalité une image PNG.
+Du coup Vercel affichait le contenu binaire de l'image au lieu d'afficher le site.
 
-Upload uniquement le contenu de ce dossier sur ton dépôt GitHub lié à Vercel.
-Ne mets pas les ZIP scripts sur GitHub/Vercel.
-Les scripts doivent être livrés seulement via Tebex / CFX Keymaster.
+Pour corriger :
+1. Supprime l'ancien déploiement ou remplace les fichiers du repo.
+2. Mets le contenu de ce dossier à la racine du projet.
+3. Vérifie que index.html est bien un fichier HTML, pas une image.
+4. Redéploie sur Vercel.
 
-Déploiement Vercel :
-1. Va sur ton dépôt GitHub du site.
-2. Clique sur Add file > Upload files.
-3. Envoie le contenu du dossier SITE_3D_FRLIFE : index.html + assets + README.
-4. Commit les changements.
-5. Vercel redéploiera automatiquement le site.
-
-Boutons Tebex : dans index.html, remplace https://frlife-rp.tebex.io par le lien exact de tes packages Tebex après validation.
+Structure correcte :
+- index.html
+- assets/
+- README...
+- vercel.json
